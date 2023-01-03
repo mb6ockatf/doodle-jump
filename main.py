@@ -3,12 +3,9 @@ import sys
 import os
 from random import randrange
 import pygame as pg
-import pymunk
-import pymunk.pygame_util
 
 pg.init()
-pymunk.pygame_util.positive_y_is_up = False
-FPS = 120
+FPS = 70
 sprite = "sprout.png"
 clock = pg.time.Clock()
 pg.mouse.set_visible(False)
@@ -16,12 +13,10 @@ screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
 info = pg.display.Info()
 screen_width = info.current_w
 screen_height = info.current_h
+print(screen_width, screen_height)
 pg.display.set_caption("DOODLE JUMP")
 black = pg.Color("black")
 white = pg.Color("white")
-draw_options = pymunk.pygame_util.DrawOptions(screen)  # type: ignore
-space = pymunk.Space()
-space.gravity = 0, 8000
 
 
 def load_image(name: str):
@@ -36,6 +31,12 @@ def load_image(name: str):
 class Hopalong(pg.sprite.Sprite):
     def __init__(self, *group):
         super().__init__(*group)
+        self.jump_height = screen_height // 2
+        self.move_length = screen_width // 6
+        self.is_moving_up = None
+        self.left_to_move_up = self.jump_height
+        self.is_moving_right = None
+        self.left_to_move_right = self.move_length
         image = load_image(sprite)
         self.image = pg.transform.scale(image, (200, 200))
         self.width = self.image.get_width()
@@ -43,26 +44,29 @@ class Hopalong(pg.sprite.Sprite):
         self.size = (self.width, self.height)
         self.rect = self.image.get_rect()
         self.rect.center = screen_height, screen_width // 2
-        self.set_physics()
-
-    def set_physics(self):
-        self.mass = 1
-        self.moment = pymunk.moment_for_box(self.mass, self.size)
-        self.body = pymunk.Body(body_type=pymunk.Body.KINEMATIC)
-        self.body.moment = self.moment
-        point_a = (self.width // 2 + self.rect.x,
-                    self.height // 2 - self.rect.y)
-        point_b = (self.width + self.rect.x,
-                    self.height + self.rect.y)
-        self.shape = pymunk.Segment(self.body, (point_a), (point_b), 100)
-        self.shape.elasticity = 0.8
-        self.shape.friction = 0.5
-        space.add(self.body, self.shape)
 
     def update(self):
-        self.body.apply_impulse_at_local_point((self.rect.x + self.width // 2,
-        10), (0, 0))
-
+        if self.is_moving_right is not None:
+            if self.is_moving_right:
+                self.rect.x += 10
+            else:
+                self.rect.x -= 10
+            self.left_to_move_right -= 10
+        if self.left_to_move_right == 0:
+            self.is_moving_right = None
+            self.left_to_move_right = self.move_length
+        if self.is_moving_up is not None:
+            if self.is_moving_up:
+                self.rect.y -= 10
+            else:
+                self.rect.y += 10
+            self.left_to_move_up -= 10
+        if self.left_to_move_up == 0:
+            if self.is_moving_up:
+                self.is_moving_up = False
+            else:
+                self.is_moving_up = None
+            self.left_to_move_up = self.jump_height
 
 
 all_sprites = pg.sprite.Group()
@@ -75,12 +79,19 @@ while running:
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:
                 running = False
+            if event.key == pg.K_UP:
+                if hopalong.is_moving_up is None:
+                    hopalong.is_moving_up = True
+    keys = pg.key.get_pressed()
+    if keys[pg.K_RIGHT]:
+        hopalong.is_moving_right = True
+    elif keys[pg.K_LEFT]:
+        hopalong.is_moving_right = False
     screen.fill(black)
     all_sprites.update()
     all_sprites.draw(screen)
-    space.step(1 / FPS)
-    space.debug_draw(draw_options)
     pg.display.flip()
     pg.display.update()
     clock.tick(FPS)
 pg.quit()
+
