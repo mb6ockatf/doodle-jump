@@ -2,67 +2,74 @@
 import sys
 import os
 from random import randint
-import pygame as pg
+import pygame
 
-pg.init()
+pygame.init()
 FPS = 70
-sprite = "sprout.png"
-clock = pg.time.Clock()
-pg.mouse.set_visible(False)
-screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
-info = pg.display.Info()
+clock = pygame.time.Clock()
+pygame.mouse.set_visible(False)
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+info = pygame.display.Info()
 screen_width = info.current_w
 screen_height = info.current_h
-pg.display.set_caption("DOODLE JUMP")
-black = pg.Color("black")
-white = pg.Color("white")
+pygame.display.set_caption("DOODLE JUMP")
+black = pygame.Color("black")
+white = pygame.Color("white")
 difficulty = 6
-shift = 0
-step = 0
 running = True
 
-def load_image(name: str) -> pg.Surface:
+
+def load_image(name: str) -> pygame.Surface:
     fullname = os.path.join('data', name)
     if not os.path.isfile(fullname):
         print(f"file '{fullname}' not found")
-        pg.quit()
-    image = pg.image.load(fullname)
+        pygame.quit()
+    image = pygame.image.load(fullname)
     image.set_colorkey(black)
     image.convert_alpha()
     return image
 
 
-class Tile(pg.sprite.Sprite):
-    def __init__(self, group: pg.sprite.Group, hero: pg.sprite.Sprite):
+class Tile(pygame.sprite.Group):
+    def __init__(self,
+                 is_broken: bool,
+                 group: pygame.sprite.Group,
+                 player_jump: int,
+                 player_x: int):
         super().__init__(group)
-        image = load_image("tile.png")
-        self.image = pg.transform.scale(image, (155, 35))
+        self.is_broken = is_broken
+        self.is_falling = False
+        if self.is_broken:
+            image_name = "broken_tile.png"
+        else:
+            image_name = "tile.png"
+        image = load_image(image_name)
+        self.image = pygame.transform.scale(image, (155, 35))
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.size = (self.width, self.height)
         self.rect = self.image.get_rect()
         center_height = self.generate_height()
-        center_width = self.generate_width(hero)
-        ### TRIANGLE
-        self.rect.center = self.generate_width(hero), self.generate_height()
+        center_width = self.generate_width(player_jump, player_x)
+        self.rect.center = (center_width, center_height)
         self._edges = None
-        self.is_in_progress = False
-        self.progress_distance = None
+        self.rect.y = center_height
 
-    def generate_width(self, correction_by: pg.sprite.Sprite) -> int:
-        radius = correction_by.move_length
-        minimal = correction_by.rect.x - radius
+    def generate_width(self, correction_radius: int, correction_x: int) -> int:
+        minimal = correction_x - correction_radius
         minimal = round(minimal)
         if minimal < 0:
             minimal = 0
-        maximal = correction_by.rect.x + radius
+        maximal = correction_x + correction_radius
         maximal = round(maximal)
         if maximal > screen_width:
             maximal = screen_width
         return randint(minimal, maximal)
 
     def generate_height(self) -> int:
-        return randint(screen_height // 2 - 200, screen_height // 5 * 3)
+        value = randint(screen_height // 4, screen_height // 3 * 2)
+        value = int(round(value, -1))
+        return value
 
     @property
     def edges(self) -> tuple:
@@ -72,123 +79,168 @@ class Tile(pg.sprite.Sprite):
             self._edges = (left_edge, right_edge)
         return self._edges
 
+"""
+    def update(self):
+        if self.is_broken and self.is_falling:
+            self.fall()
 
-class Hopalong(pg.sprite.Sprite):
-    def __init__(self, *group: pg.sprite.Group):
-        super().__init__(*group)
-        self.jump_height = screen_height // 3 * 2
+    def fall(self):
+        self.rect.y += 50
+        if self.rect.y > screen_height:
+            self.kill()
+"""
+
+
+class Hopalong(pygame.sprite.Sprite):
+    def __init__(self, name: str, group: pygame.sprite.Group):
+        super().__init__(group)
+        self.jump_height = int(round(screen_height // 3 * 2, -1))
         self.move_length = screen_width // 2
         self.is_moving_up = None
         self.left_to_move_up = self.jump_height
         self.is_moving_right = None
-        self.left_to_move_right = self.move_length
-        self.tile = None
-        image = load_image(sprite)
-        self.image = pg.transform.scale(image, (100, 100))
+        self.is_facing_right = False
+        self.on_tile_edges = None
+        self.name = name
+        self.image_storage = {}
+        self.image = None
+        if self.name in ("sprout", "bird"):
+            size = (100, 100)
+            sprite_left = load_image(self.name + "_left.png")
+            sprite_left = pygame.transform.scale(sprite_left, size)
+            sprite_right = load_image(self.name + "_right.png")
+            sprite_right = pygame.transform.scale(sprite_right, size)
+            self.image_storage[self.name + "_left"] = sprite_left
+            self.image_storage[self.name + "_right"] = sprite_right
+            if self.image is None:
+                self.image = self.image_storage[self.name + "_left"]
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.size = (self.width, self.height)
         self.rect = self.image.get_rect()
         self.rect.center = screen_height, screen_width // 2
 
-    def update(self, group: pg.sprite.Group):
-        for _ in range(10):
-            self.move(group)
+    def update(self, group: pygame.sprite.Group, shift: int):
+        if self.is_facing_right is True:
+            self.image = self.image_storage[self.name + "_right"]
+        else:
+            self.image = self.image_storage[self.name + "_left"]
+        shift = self.move(group, shift)
+        return shift
 
-    def move(self, group: pg.sprite.Group):
+    def move(self, group: pygame.sprite.Group, shift: int):
         is_still = not self.is_moving_up
         is_colliding = self.is_having_collision(group)
         if is_still and is_colliding:
             self.left_to_move_up = self.jump_height
             self.is_moving_up = True
-            self.tile = is_colliding
+            self.on_tile_edges = is_colliding.edges
+            if shift == 0:
+                shifting_height = self.count_shift(is_colliding)
+                if shifting_height > 0:
+                    shift = shifting_height
         if self.is_moving_right is True:
-            self.rect.x += 10
+            self.rect.x += 18
+            self.is_facing_right = True
+            if self.rect.x > screen_width:
+                self.rect.x = 0
         elif self.is_moving_right is False:
-            self.rect.x -= 10
+            self.rect.x -= 18
+            self.is_facing_right = False
+            if self.rect.x < 0:
+                self.rect.x = screen_width
         if self.is_moving_right is not None:
             self.is_moving_right = None
-        if self.tile:
-            edge = self.tile.edges
-            if edge[0] > self.rect.x or edge[1] < self.rect.x:
-                self.tile = None
+        if self.on_tile_edges:
+            edges = self.on_tile_edges
+            if edges[0] > self.rect.x or edges[1] < self.rect.x:
+                self.on_tile_edges = None
                 self.is_moving_up = False
         if self.is_moving_up is True:
             if self.rect.y > 0:
-                self.rect.y -= 1
-            self.left_to_move_up -= 1
+                self.rect.y -= 10
+            self.left_to_move_up -= 10
         elif self.is_moving_up is False:
-            self.rect.y += 1
+            self.rect.y += 10
         if not self.left_to_move_up:
             if self.is_moving_up:
                 self.is_moving_up = False
             else:
                 self.is_moving_up = True
             self.left_to_move_up = self.jump_height
-        print("left_to_move_up", self.left_to_move_up)
+        return shift
 
     def is_alive(self):
         if self.rect.y > screen_height:
             return False
         return True
 
-    def is_having_collision(self, group: pg.sprite.Group) -> pg.sprite.Sprite:
+    def is_having_collision(self, group: pygame.sprite.Group) -> pygame.sprite.Sprite:
         for sprite in group:
             if not (sprite.edges[0] < self.rect.x < sprite.edges[1]):
                 continue
-            difference_height = sprite.rect.y - self.rect.y
-            print(difference_height)
-            if difference_height != 20:
+            if sprite.rect.y - self.rect.y != 80:
                 continue
             return sprite
 
+    def count_shift(self, platform: pygame.sprite.Sprite):
+        measurer = platform.rect.y
+        value = round(screen_height - 200 - measurer, -1)
+        value = int(value)
+        return value
 
-all_sprites = pg.sprite.Group()
-hopalong = Hopalong(all_sprites)
-tiles = pg.sprite.Group()
-tile = Tile(tiles, hopalong)
+
+sprites = ["bird", "sprout"]
+player_group = pygame.sprite.Group()
+sprite_name = sprites[randint(0, 1)]
+hopalong = Hopalong(sprite_name, player_group)
+tiles_group = pygame.sprite.Group()
+tile = Tile(False, tiles_group, hopalong.move_length, hopalong.rect.x)
+print(screen_width, screen_height)
+print(tile.rect.x, tile.rect.y)
+SHIFT = 0
+STEP =  0
 while running:
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
             running = False
-        if event.type == pg.KEYDOWN:
-            if event.key == pg.K_ESCAPE:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
                 running = False
-            if event.key == pg.K_UP:
+            if event.key == pygame.K_UP:
                 if hopalong.is_moving_up is None:
                     hopalong.is_moving_up = True
-    keys = pg.key.get_pressed()
-    if keys[pg.K_RIGHT]:
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_RIGHT]:
         hopalong.is_moving_right = True
-    elif keys[pg.K_LEFT]:
+    elif keys[pygame.K_LEFT]:
         hopalong.is_moving_right = False
     if hopalong.is_alive() is False:
         running = False
-    all_sprites.update(tiles)
-    tiles.update()
-    measurer = hopalong.tile
-    if measurer and not shift:
-        value = screen_height - 200 - measurer.rect.y
-        if value > 0:
-            shift = value
-    if shift:
-        if not step:
-            step = shift // 10
-        round_step = round(step)
-        for entity in tiles:
-            entity.rect.y += round_step
-        shift -= step
-        if shift <= 0:
-            newcomers = randint(1, 2)
-            for _ in range(newcomers):
-                tile = Tile(tiles, hopalong)
-            shift = 0
-    hopalong.tile = None
-    screen.fill(black)
-    all_sprites.draw(screen)
-    tiles.draw(screen)
-    pg.display.flip()
-    pg.display.update()
+    is_shifting = player_group.update(tiles_group, SHIFT)
+    if is_shifting:
+        SHIFT = is_shifting
+        STEP = SHIFT // 10
+        newcomers = randint(1, 3)
+        for _ in range(newcomers):
+            correction_data = (hopalong_move_length, hopalong.rect.x)
+            tile = Tile(False, tiles_group, *correction_data)
+        broken_newcomers = randint(1, 2)
+        for _ in range(broken_newcomers):
+            correction_data = (hopalong_move_length, hopalong.rect.x)
+            tile = Tile(True, tiles_group, *correction_data)
+    if SHIFT <= 0:
+        shift = 0
+    else:
+        for entity in tiles_group:
+            entity.rect.y += STEP
+        SHIFT -= STEP
+    tiles_group.update()
+#    screen.fill(black)
+    player_group.draw(screen)
+    tiles_group.draw(screen)
+    pygame.display.flip()
+    pygame.display.update()
     clock.tick(FPS)
-pg.quit()
+pygame.quit()
 
