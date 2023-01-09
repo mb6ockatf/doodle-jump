@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import sys
 import os
 from random import randint
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
+
 
 pygame.init()
 FPS = 70
@@ -30,15 +30,29 @@ def load_image(name: str) -> pygame.Surface:
     image.convert_alpha()
     return image
 
+
 def round_by_ten(number: int) -> int:
     number = round(number, -1)
-    number= int(number)
+    number = int(number)
     return number
+
+
+def write_record(value: int):
+    open("record.bin", "ab").close()
+    with open("record.bin", "rb") as bytestream:
+        current_record = bytestream.read().decode("utf-8")
+        if current_record == "":
+            current_record = 0
+        current_record = int(current_record)
+    if value > current_record:
+        new_record = str(value).encode("utf-8")
+        with open("record.bin", "wb") as file:
+            file.write(new_record)
 
 
 class Tile(pygame.sprite.Sprite):
     def __init__(self, is_broken: bool, group: pygame.sprite.Group,
-                 player: pygame.sprite.Sprite):
+                 player_height: tuple):
         super().__init__(group)
         self.is_broken = is_broken
         self.is_falling = False
@@ -49,13 +63,13 @@ class Tile(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (155, 35))
         self.width = self.image.get_width()
         self.rect = self.image.get_rect()
-        hight_calc_data = (player.jump_height, player.height, player.rect.y)
-        self.rect.y = self.generate_height(*hight_calc_data)
+        self.rect.y = self.generate_height(*player_height)
         x_value = randint(1, screen_width - 1)
         self.rect.x = round_by_ten(x_value)
         self._edges = None
 
-    def generate_height(self, radius: int, edge: int, minimal_y: int) -> int:
+    @staticmethod
+    def generate_height(radius: int, edge: int, minimal_y: int) -> int:
         minimal = minimal_y - radius + edge * 1.5
         maximal = minimal_y + radius - edge * 1.5
         if minimal < 0:
@@ -109,6 +123,9 @@ class Hopalong(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = screen_height, screen_width // 2
 
+    def get_height_data(self) -> tuple:
+        return self.jump_height, self.height, self.rect.y
+
     def update(self, group: pygame.sprite.Group) -> bool:
         if self.is_facing_right:
             image_name = self.name + "_right"
@@ -117,7 +134,14 @@ class Hopalong(pygame.sprite.Sprite):
         self.image = self.image_storage[image_name]
         shifted = False
         is_still = not self.is_moving_up
-        colliding_object = self.collide(group)
+        colliding_object = None
+        for sprite in group:
+            if not sprite.edges[0] < self.rect.x < sprite.edges[1]:
+                continue
+            if sprite.rect.y - self.rect.y != 80:
+                continue
+            colliding_object = sprite
+            break
         if is_still and colliding_object:
             colliding_object.is_falling = colliding_object.is_broken
             self.left_to_move_up = self.jump_height
@@ -149,46 +173,27 @@ class Hopalong(pygame.sprite.Sprite):
             return False
         return True
 
-    def collide(self, group: pygame.sprite.Group):
-        for sprite in group:
-            if not sprite.edges[0] < self.rect.x < sprite.edges[1]:
-                continue
-            if sprite.rect.y - self.rect.y != 80:
-                continue
-            return sprite
 
-
-sprites = ["bird", "sprout"]
-sprite_name = sprites[randint(0, 1)]
-player_group = pygame.sprite.Group()
-hopalong = Hopalong(player_group, sprite_name)
-tiles_group = pygame.sprite.Group()
-Tile(False, tiles_group, hopalong)
-SHIFT = 0
-STEP =  0
-score_position = (screen_width // 10 * 9, screen_height // 10)
-is_paused = True
-is_running = False
 is_opened = True
+is_running = False
+hopalong = None
+is_paused = None
+SHIFT = None
+STEP = None
+player_group = None
+tiles_group = None
+score_position = None
+sprites = ["bird", "sprout"]
 while is_opened:
-    screen.fill(black)
-    pygame.display.update()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            is_opened = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                is_opened = False
-            if event.key in (pygame.K_UP, pygame.K_SPACE):
-                is_running = True
-                pygame.mouse.set_visible(False)
     while is_running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                is_opened = False
                 is_running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     is_running = False
+                    is_paused = False
                     pygame.mouse.set_visible(True)
                 if event.key in (pygame.K_UP, pygame.K_SPACE):
                     if hopalong.is_moving_up is None:
@@ -206,6 +211,7 @@ while is_opened:
                 hopalong.is_moving_right = False
             if hopalong.is_alive() is False:
                 is_running = False
+                write_record(score)
             tiles_group.update()
             is_shifting = hopalong.update(tiles_group)
             if not SHIFT and is_shifting:
@@ -220,10 +226,11 @@ while is_opened:
                 SHIFT -= STEP
                 if SHIFT <= 0:
                     SHIFT = 0
-                    Tile(False, tiles_group, hopalong)
+                    player_height_data = hopalong.get_height_data()
+                    Tile(False, tiles_group, player_height_data)
                     broken_newcomers = randint(0, 2)
                     for _ in range(broken_newcomers):
-                        Tile(True, tiles_group, hopalong)
+                        Tile(True, tiles_group, player_height_data)
                     score += 10
         screen.fill(black)
         player_group.draw(screen)
@@ -232,15 +239,30 @@ while is_opened:
         pygame.display.flip()
         pygame.display.update()
         clock.tick(FPS)
-file_exists = open("record.bin", "ab").close()
-with open("record.bin", "rb") as bytestream:
-    current_record = bytestream.read().decode("utf-8")
-    if current_record == "":
-        current_record = 0
-    current_record = int(current_record)
-if score > current_record:
-    new_record = str(score).encode("utf-8")
-    with open("record.bin", "wb") as file:
-        file.write(new_record)
+    else:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                is_opened = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    is_opened = False
+                elif event.key in (pygame.K_UP, pygame.K_SPACE):
+                    is_running = True
+                    pygame.mouse.set_visible(False)
+                    sprite_name = sprites[randint(0, 1)]
+                    player_group = pygame.sprite.Group()
+                    hopalong = Hopalong(player_group, sprite_name)
+                    tiles_group = pygame.sprite.Group()
+                    Tile(False, tiles_group, hopalong.get_height_data())
+                    score = 0
+                    SHIFT = 0
+                    STEP = 0
+                    score_width = round_by_ten(screen_width * 0.9)
+                    score_height = screen_ehight // 10
+                    score_position = (score_width, score_height)
+                    is_paused = True
+        screen.fill(black)
+        pygame.display.flip()
+        clock.tick(FPS)
 pygame.quit()
 
