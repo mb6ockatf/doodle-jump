@@ -258,7 +258,7 @@ while is_opened:
                     SHIFT = 0
                     STEP = 0
                     score_width = round_by_ten(screen_width * 0.9)
-                    score_height = screen_ehight // 10
+                    score_height = screen_height // 10
                     score_position = (score_width, score_height)
                     is_paused = True
         screen.fill(black)
