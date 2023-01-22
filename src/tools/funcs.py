@@ -1,17 +1,18 @@
-import os
-from dataclasses import dataclass
+"""
+Some useful functions
+"""
+from os import path
 import pygame
 
 
-def load_image(name: str) -> pygame.Surface:
+def load_image(name: str) -> pygame.surface.Surface:
     """
     Loads image and creates pygame.Surface
     set_colorkey and convert_alpha to remove background on png images
     """
-    fullname = os.path.join('data', name)
-    if not os.path.isfile(fullname):
+    fullname = path.join('data', name)
+    if not path.isfile(fullname):
         print(f"file '{fullname}' not found")
-        pygame.quit()
     image = pygame.image.load(fullname)
     black = pygame.Color("Black")
     image.set_colorkey(black)
@@ -19,18 +20,21 @@ def load_image(name: str) -> pygame.Surface:
     return image
 
 
-def round_by_ten(number) -> int:
+def round_by_five(number) -> int:
     """
-    Returns number-like object rounded by ten
+    Returns number-like object rounded by five
     """
-    number = round(number, -1)
-    number = int(number)
+    last_num = round(number % 10)
+    if last_num >= 5:
+        number += 10 - last_num
+    else:
+        number -= last_num
+    number = round(number)
     return number
 
-def write_record(value: int):
-    """
-    Writes new record value to file
-    """
+
+def write_record(value: int) -> None:
+    """Writes new record value to file"""
     open("record.bin", "ab").close()
     with open("record.bin", "rb") as bytestream:
         current_record = bytestream.read().decode("utf-8")
@@ -42,10 +46,8 @@ def write_record(value: int):
         with open("record.bin", "wb") as file:
             file.write(new_record)
 
-@dataclass
-class InitDisplay:
-    display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    _info = pygame.display.Info()
-    width = _info.current_w
-    height = _info.current_h
+
+
+
+
 
