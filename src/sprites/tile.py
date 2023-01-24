@@ -29,7 +29,7 @@ class Tile(pygame.sprite.Sprite):
         self.width = self.image.get_width()
         self.rect = self.image.get_rect()
         self.rect.y = self.generate_height(*player_height)
-        x_value = randint(1, screen_sizes[0] - 1)
+        x_value = randint(1, screen_sizes[0] - self.width)
         self.rect.x = round_by_five(x_value)
         x, half_width = self.rect.x, self.width // 2
         self.edges = (x - half_width, x + half_width)
