@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - changelog notes for v0.0.1
 
 ### Fixed
+- wrong tile generation
 
 ### Changed
 
@@ -37,4 +38,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 [unreleased]: https://github.com/mb6ockatf/doodle-jump/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/mb6ockatf/doodle-jump/releases/tag/v0.0.1
+[0.0.1]: https://github.com/mb6ockatf/doodle_jump/releases/tag/v0.0.1
