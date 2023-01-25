@@ -18,7 +18,7 @@ class Gamekeeper:
     NAME = "your name"
 
     def __init__(self):
-        self.score = 0
+        self._score = 0
         self.db_connection = DatabaseConnection()
         name = Gamekeeper.NAME
         self.current_record = self.set_current_record(name)
@@ -43,6 +43,16 @@ class Gamekeeper:
         score_width = round_by_five(display_sizes[0] * 0.9)
         score_height = display_sizes[1] // 10
         self.score_position = (score_width, score_height)
+
+    @property
+    def score(self) -> int:
+        return self._score
+
+    @score.setter
+    def score(self, value: int):
+        self._score = value
+        if self._score % 100 == 0 and self.score != 0:
+            self.hopalong.difficulty *= 1.25
 
     def set_current_record(self, name: str):
         """

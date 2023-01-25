@@ -16,13 +16,14 @@ class Hopalong(pygame.sprite.Sprite):
     def __init__(self, group: pygame.sprite.Group, name: str,
                 screen_sizes: tuple):
         super().__init__(group)
+        self.difficulty = 1
         self.screen_sizes = screen_sizes
         self.jump_height = screen_sizes[1] // 3 * 2
         self.jump_height = round_by_five(self.jump_height)
         self.move_length = screen_sizes[0]
         self.is_moving_up = None
         self.left_to_move_up = self.jump_height
-        self._is_moving_right = None
+        self.is_moving_right = None
         self.is_facing_right = False
         self.on_tile_edges = None
         self.name = name
@@ -49,7 +50,39 @@ class Hopalong(pygame.sprite.Sprite):
         """
         returns all the hopalong height data for calculations
         """
-        return self.jump_height, self.height, self.rect.y  # type:ignore
+        return self.jump_height, self.height, self.rect.y
+
+    def move_horizontally(self, facing_right: bool):
+        """
+        move right and left
+        go to other side of screen if crossed edge
+        """
+        assert type(facing_right) is bool
+        self.is_facing_right = facing_right
+        step = round(self.difficulty * 20)
+        if facing_right:
+            self.rect.x += step
+        else:
+            self.rect.x -= step
+        self.rect.x %= self.screen_sizes[0]
+
+    def move_vertically(self, is_moving_up: bool):
+        """
+        jump up if enough height left,
+        else fall down
+        """
+        assert type(is_moving_up) is bool
+        if is_moving_up:
+            if self.rect.y > 0:
+                self.rect.y -= 5
+            self.left_to_move_up -= 5
+        else:
+            self.rect.y += 5
+        if self.rect.y % 5 != 0:
+            self.rect.y = round_by_five(self.rect.y)
+        if not self.left_to_move_up:
+            self.is_moving_up = not self.is_moving_up
+            self.left_to_move_up = self.jump_height
 
     def update(self, group: pygame.sprite.Group) -> bool:
         """
@@ -64,53 +97,28 @@ class Hopalong(pygame.sprite.Sprite):
         is_still = not self.is_moving_up
         colliding_object = None
         for sprite in group:
-            if not sprite.edges[0] < self.rect.x < sprite.edges[1]:  # type: ignore
+            if not sprite.edges[0] < self.rect.x < sprite.edges[1]:
                 continue
-            if sprite.rect.y - self.rect.y != 80:#type:ignore
+            if sprite.rect.y - self.rect.y != 80:
                 continue
             colliding_object = sprite
             break
         if is_still and colliding_object:
-            colliding_object.is_falling = colliding_object.is_broken #type:ignore
+            colliding_object.is_falling = colliding_object.is_broken
             self.left_to_move_up = self.jump_height
             self.is_moving_up = True
             shifted = True
-        if self.is_moving_right is True:
-            self.rect.x += 20 #type:ignore
-            self.is_facing_right = True
-        elif self.is_moving_right is False:
-            self.rect.x -= 20 #type:ignore
-            self.is_facing_right = False
-        self.rect.x %= self.screen_sizes[0] #type:ignore
-        self.is_moving_right = None #type:ignore
-        if self.is_moving_up is True:
-            if self.rect.y > 0: #type:ignore
-                self.rect.y -= 5 #type:ignore
-            self.left_to_move_up -= 5
-        elif self.is_moving_up is False:
-            self.rect.y += 5 #type:ignore
-        if self.rect.y % 5 != 0: #type:ignore
-            self.rect.y = round_by_five(self.rect.y) #type:ignore
-        if not self.left_to_move_up:
-            self.is_moving_up = not self.is_moving_up
-            self.left_to_move_up = self.jump_height
+        if self.is_moving_right is not None:
+            self.move_horizontally(self.is_moving_right)
+        self.is_moving_right = None
+        if self.is_moving_up is not None:
+            self.move_vertically(self.is_moving_up)
         return shifted
 
     def is_alive(self) -> bool:
         """
         Check if sprite is still visible on the screen
         """
-        if self.rect.y > self.screen_sizes[1]: #type:ignore
+        if self.rect.y > self.screen_sizes[1]:
             return False
         return True
-
-    @property
-    def is_moving_right(self):
-        """
-        Property to isolate is_moving_right variable
-        """
-        return self._is_moving_right
-
-    @is_moving_right.setter
-    def is_moving_right(self, value):
-        self._is_moving_right = value
