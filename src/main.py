@@ -18,7 +18,9 @@ class Gamekeeper:
     NAME = "your name"
 
     def __init__(self):
+        pygame.mouse.set_visible(True)
         self._score = 0
+        self.stage = 0
         self.db_connection = DatabaseConnection()
         name = Gamekeeper.NAME
         self.current_record = self.set_current_record(name)
@@ -46,13 +48,15 @@ class Gamekeeper:
 
     @property
     def score(self) -> int:
-        return self._score
+        return round(self._score)
 
     @score.setter
     def score(self, value: int):
-        self._score = value
-        if self._score % 100 == 0 and self.score != 0:
-            self.hopalong.difficulty *= 1.25
+        self._score = self._score + (value - self._score) * self.hopalong.difficulty
+        current_stage = self._score // 100
+        if current_stage > self.stage:
+            self.stage = current_stage
+            self.hopalong.difficulty *= 1.1
 
     def set_current_record(self, name: str):
         """
@@ -71,6 +75,7 @@ class Gamekeeper:
         Set variables to start the game
         """
         Gamekeeper.NAME = self.nickname_box.text
+        pygame.mouse.set_visible(False)
         self.is_running = True
         self.shift = 0
         self.step = 0
