@@ -1,4 +1,4 @@
-# doodle_jump v0.0.1
+# doodle-jump v0.0.1
 
 Doodle jump game written with pygame
 
