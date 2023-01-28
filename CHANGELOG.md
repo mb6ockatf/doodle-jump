@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added 
+### Added
+- repository renamed to doodle-jump (before: doodle_jump)
 - changelog notes for v0.0.1
 
 ### Fixed
