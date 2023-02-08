@@ -2,10 +2,9 @@
 
 Doodle jump game written with pygame
 
-[![Download doodle-jump](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/doodle-jump/files/latest/download)
+[![sourceforge download](https://img.shields.io/badge/SourceForge-Download-orange)](https://sourceforge.net/projects/doodle-jump/files/latest/download)
 
-[![Download doodle-jump](https://img.shields.io/sourceforge/dt/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download)
-[![Download doodle-jump](https://img.shields.io/sourceforge/dm/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download)
+[![latest release](https://img.shields.io/github/v/release/mb6ockatf/doodle-jump?display_name=release&sort=date&color=orange)](https://github.com/mb6ockatf/doodle-jump/releases/latest)
 
 ## Usage howto
 1. Clone the repository: `git clone git@github.com:mb6ockatf/doodle_jump.git`
@@ -22,4 +21,5 @@ Doodle jump game written with pygame
 
 ------
 
-<a href="https://sourceforge.net/p/doodle-jump/"><img alt="Download doodle-jump" src="https://sourceforge.net/sflogo.php?type=18&group_id=3600783" width=200></a>
+| <a href="https://sourceforge.net/p/doodle-jump/"><img alt="Download doodle-jump" src="https://sourceforge.net/sflogo.php?type=18&group_id=3600783" width=200></a> | [![Download doodle-jump](https://img.shields.io/sourceforge/dt/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download) | [![Download doodle-jump](https://img.shields.io/sourceforge/dm/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download) |
+| -- | -- | -- |
