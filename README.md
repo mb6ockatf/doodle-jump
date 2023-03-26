@@ -19,7 +19,7 @@ Doodle jump game written with pygame v0.0.1
 ## Usage howto
 1. Clone the repository: `git clone git@github.com:mb6ockatf/doodle_jump.git`
 2. `cd` to project's folder
-3. To start the game, run `python3 src/main.py`
+3. To start the game, run `python3 start.py`
 4. Insert your nickname in main menu to save the record
 
 ## Controls
@@ -29,18 +29,6 @@ Doodle jump game written with pygame v0.0.1
 
 `left arrow` and `right arrow` to move the character
 
-
-## Possible errors
-
-`How to launch correctly`
-
-![image](https://user-images.githubusercontent.com/79650307/227781761-e9f67d47-b204-4967-97d0-57dc8140f8f9.png)
-
-<hr>
-
-`How NOT to launch correctly`
-
-![image](https://user-images.githubusercontent.com/79650307/227781798-e5f01131-a507-484b-b6e6-e2903318eb88.png)
 
 
 
