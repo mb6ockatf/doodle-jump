@@ -29,6 +29,21 @@ Doodle jump game written with pygame v0.0.1
 
 `left arrow` and `right arrow` to move the character
 
+
+## Possible errors
+
+`How to launch correctly`
+
+![image](https://user-images.githubusercontent.com/79650307/227781761-e9f67d47-b204-4967-97d0-57dc8140f8f9.png)
+
+<hr>
+
+`How NOT to launch correctly`
+
+![image](https://user-images.githubusercontent.com/79650307/227781798-e5f01131-a507-484b-b6e6-e2903318eb88.png)
+
+
+
 ------
 
 | <a href="https://sourceforge.net/p/doodle-jump/"><img alt="Download doodle-jump" src="https://sourceforge.net/sflogo.php?type=18&group_id=3600783" width=200></a> | [![Download doodle-jump](https://img.shields.io/sourceforge/dt/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download) | [![Download doodle-jump](https://img.shields.io/sourceforge/dm/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download) |
