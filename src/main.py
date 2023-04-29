@@ -36,7 +36,7 @@ class Gamekeeper:
         name_pos = display_sizes[0] // 6, display_sizes[1] // 2, 300, 100
         name_colors = (colors["grey"], colors["brown"])
         self.nickname_box = InputBox(name_pos, name, name_colors, font)
-        score_width = round_by_five(display_sizes[0] * 0.9)
+        score_width = round_by_five(display_sizes[0] * 0.8)
         score_height = display_sizes[1] // 10
         self.score_position = (score_width, score_height)
 
