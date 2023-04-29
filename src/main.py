@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
-from random import randint
+from random import randint, choice
 import pygame
 from database import DatabaseConnection
 from sprites import Hopalong, Tile
@@ -25,7 +25,7 @@ class Gamekeeper:
         self.is_paused = True
         self.tiles = pygame.sprite.Group()
         self.players = pygame.sprite.Group()
-        sprite_name = sprites[randint(0, 1)]
+        sprite_name = choice(sprites)
         self.hopalong = Hopalong(self.players, sprite_name, display_sizes)
         Tile(False, self.tiles, self.hopalong.get_height_data(), display_sizes)
         self.background_color = colors.get_random_paint(colors.dark)
@@ -74,6 +74,8 @@ class Gamekeeper:
         self.is_running = False
         self.is_opened = False
         self.is_paused = False
+        self.hopalong = None
+        self.players = None
         self.db_connection.close()
 
 
@@ -87,7 +89,7 @@ if __name__ == "__main__":
     display_sizes = (_info.current_w, _info.current_h)
     pygame.display.set_caption("DOODLE JUMP")
     font = pygame.font.SysFont(None, 144)  # type:ignore
-    sprites = ["bird", "sprout"]
+    sprites = ["ghost", "sprout", "bird"]
     gamekeeper = Gamekeeper()
     while gamekeeper.is_opened:
         mouse = pygame.mouse.get_pos()

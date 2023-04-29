@@ -19,17 +19,17 @@ class Hopalong(pygame.sprite.Sprite):
         self.name = name
         self.image_storage = {}
         self.image = None
-        if self.name in ("sprout", "bird"):
+        if self.name == "ghost":
+            size = (110, 110)
+        elif self.name in ("sprout", "bird"):
             size = (100, 100)
-            sprite_left = load_image(self.name + "_left.png")
-            sprite_left = pygame.transform.scale(sprite_left, size)
-            sprite_right = load_image(self.name + "_right.png")
-            sprite_right = pygame.transform.scale(sprite_right, size)
-            self.image_storage[self.name + "_left"] = sprite_left
-            self.image_storage[self.name + "_right"] = sprite_right
-            self.image = self.image_storage[self.name + "_left"]
-        else:
-            raise ValueError("no sprite found")
+        sprite_left = load_image(self.name + "_left.png")
+        sprite_left = pygame.transform.scale(sprite_left, size)
+        sprite_right = load_image(self.name + "_right.png")
+        sprite_right = pygame.transform.scale(sprite_right, size)
+        self.image_storage[self.name + "_left"] = sprite_left
+        self.image_storage[self.name + "_right"] = sprite_right
+        self.image = self.image_storage[self.name + "_left"]
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.size = (self.width, self.height)
