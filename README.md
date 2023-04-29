@@ -29,10 +29,13 @@ Doodle jump game written with pygame v0.0.1
 
 `left arrow` and `right arrow` to move the character
 
-
-
+![python](http://ForTheBadge.com/images/badges/made-with-python.svg)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=black)
 
 ------
 
-| <a href="https://sourceforge.net/p/doodle-jump/"><img alt="Download doodle-jump" src="https://sourceforge.net/sflogo.php?type=18&group_id=3600783" width=200></a> | [![Download doodle-jump](https://img.shields.io/sourceforge/dt/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download) | [![Download doodle-jump](https://img.shields.io/sourceforge/dm/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download) |
+| <a href="https://sourceforge.net/p/doodle-jump/"><img alt="Download doodle-jump" src="https://sourceforge.net/sflogo.php?type=18&group_id=3600783" width=200></a> | [![Download doodle-jump](https://img.shields.io/sourceforge/dt/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download) | [![Download doodle-jump](https://img.shields.io/sourceforge/dm/doodle-jump.svg)](https://sourceforge.net/projects/doodle-jump/files/latest/download) | 
 | -- | -- | -- |
+
+![license](https://img.shields.io/github/license/mb6ockatf/doodle-jump.svg)
+![last commit](https://img.shields.io/github/last-commit/mb6ockatf/doodle-jump.svg)
