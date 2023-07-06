@@ -1,20 +1,14 @@
 #!/usr/bin/env python3
 import os
-from random import randint, choice
-
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+from random import randint, choice
 import pygame
-
 from database import DatabaseConnection
 from sprites import Hopalong, Tile
 from tools import Button, Colors, InputBox, round_by_five
 
 
 class Gamekeeper:
-    """
-    Data handler to control game cycle variables
-    """
-
     NAME = "your name"
 
     def __init__(self):
@@ -42,7 +36,7 @@ class Gamekeeper:
         name_pos = display_sizes[0] // 6, display_sizes[1] // 2, 300, 100
         name_colors = (colors["grey"], colors["brown"])
         self.nickname_box = InputBox(name_pos, name, name_colors, font)
-        score_width = round_by_five(display_sizes[0] * 0.9)
+        score_width = round_by_five(display_sizes[0] * 0.8)
         score_height = display_sizes[1] // 10
         self.score_position = (score_width, score_height)
 
@@ -52,16 +46,14 @@ class Gamekeeper:
 
     @score.setter
     def score(self, value: int):
-        self._score = self._score + (value - self._score) * self.hopalong.difficulty
+        score_boost = (value - self._score) * self.hopalong.difficulty
+        self._score = self._score + score_boost
         current_stage = self._score // 100
         if current_stage > self.stage:
             self.stage = current_stage
             self.hopalong.difficulty *= 1.1
 
     def set_current_record(self, name: str):
-        """
-        Get record for current user and handle its type
-        """
         current_record = self.db_connection.select(name)
         if current_record == []:
             current_record = 0
@@ -69,11 +61,7 @@ class Gamekeeper:
             current_record = current_record[0][0]
         return str(current_record)
 
-
     def run(self):
-        """
-        Set variables to start the game
-        """
         Gamekeeper.NAME = self.nickname_box.text
         pygame.mouse.set_visible(False)
         self.is_running = True
@@ -81,9 +69,6 @@ class Gamekeeper:
         self.step = 0
 
     def quit(self):
-        """
-        Write the record into database and set variables to close the game
-        """
         self.db_connection.insert(Gamekeeper.NAME, self.score)
         self.score = 0
         self.is_running = False
@@ -103,7 +88,7 @@ if __name__ == "__main__":
     _info = pygame.display.Info()
     display_sizes = (_info.current_w, _info.current_h)
     pygame.display.set_caption("DOODLE JUMP")
-    font = pygame.font.SysFont(None, 144) #type:ignore
+    font = pygame.font.SysFont(None, 144)  # type:ignore
     sprites = ["ghost", "sprout", "bird"]
     gamekeeper = Gamekeeper()
     while gamekeeper.is_opened:
@@ -161,15 +146,13 @@ if __name__ == "__main__":
                     gamekeeper.step = gamekeeper.shift // 10
                 if gamekeeper.shift > 0:
                     for entity in gamekeeper.tiles:
-                        entity.rect.y += gamekeeper.step #type:ignore
+                        entity.rect.y += gamekeeper.step  # type:ignore
                     gamekeeper.shift -= gamekeeper.step
                     if gamekeeper.shift <= 0:
                         gamekeeper.shift = 0
                         player_height = gamekeeper.hopalong.get_height_data()
-                        tile_data = [False,
-                                    gamekeeper.tiles,
-                                    player_height,
-                                    display_sizes]
+                        tile_data = [False, gamekeeper.tiles, player_height,
+                                     display_sizes]
                         Tile(*tile_data)
                         tile_data[0] = True
                         for _ in range(randint(0, 2)):

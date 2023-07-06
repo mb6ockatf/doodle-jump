@@ -1,20 +1,10 @@
-"""
-Hopalong - player's sprite class
-"""
 import pygame
 from tools import round_by_five, load_image
 
 
 class Hopalong(pygame.sprite.Sprite):
-    """
-    PLayer's sprite
-    can jump for self.jump_height value
-    start falling after reaching the maximum jump height
-    can land onto something, and start jumping again
-    dies when falls out of the lower side of the screen
-    """
     def __init__(self, group: pygame.sprite.Group, name: str,
-                screen_sizes: tuple):
+                 screen_sizes: tuple):
         super().__init__(group)
         self.difficulty = 1
         self.screen_sizes = screen_sizes
@@ -47,16 +37,9 @@ class Hopalong(pygame.sprite.Sprite):
         self.rect.center = screen_sizes[1], screen_sizes[0] // 2
 
     def get_height_data(self) -> tuple:
-        """
-        returns all the hopalong height data for calculations
-        """
         return self.jump_height, self.height, self.rect.y
 
     def move_horizontally(self, facing_right: bool):
-        """
-        move right and left
-        go to other side of screen if crossed edge
-        """
         assert type(facing_right) is bool
         self.is_facing_right = facing_right
         step = round(self.difficulty * 20)
@@ -67,10 +50,6 @@ class Hopalong(pygame.sprite.Sprite):
         self.rect.x %= self.screen_sizes[0]
 
     def move_vertically(self, is_moving_up: bool):
-        """
-        jump up if enough height left,
-        else fall down
-        """
         assert type(is_moving_up) is bool
         if is_moving_up:
             if self.rect.y > 0:
@@ -85,9 +64,6 @@ class Hopalong(pygame.sprite.Sprite):
             self.left_to_move_up = self.jump_height
 
     def update(self, group: pygame.sprite.Group) -> bool:
-        """
-        Check collisions and change movement direction
-        """
         if self.is_facing_right:
             image_name = self.name + "_right"
         else:
@@ -116,9 +92,4 @@ class Hopalong(pygame.sprite.Sprite):
         return shifted
 
     def is_alive(self) -> bool:
-        """
-        Check if sprite is still visible on the screen
-        """
-        if self.rect.y > self.screen_sizes[1]:
-            return False
-        return True
+        return False if self.rect.y > self.screen_sizes[1] else True
