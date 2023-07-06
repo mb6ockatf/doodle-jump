@@ -17,20 +17,28 @@ Doodle jump game written with pygame v0.0.1
 </p>
 
 ## Usage howto
-1. Clone the repository: `git clone git@github.com:mb6ockatf/doodle_jump.git`
-2. `cd` to project's folder
-3. To start the game, run `python3 start.py`
-4. Insert your nickname in main menu to save the record
+1. Clone repo :
+ ```bash
+git clone git@github.com:mb6ockatf/doodle_jump.git
+```
 
-## Controls
-`up arrow` and `space` - start the game or pause
+2. Change dir:
+```bash
+cd src
+```
 
-`ESC` - move to main menu or exit
+3. Start game:
+```bash
+python3 start.py
+```
 
-`left arrow` and `right arrow` to move the character
-
-
-
+## Controls table
+| Action      	| Description       	|
+|-------------	|-------------------	|
+| `>`         	| Move to the right 	|
+| `<`         	| Move to the left  	|
+| `Space` `↑` 	| Pause             	|
+| `Esc`       	| Pause or exit     	|
 
 ------
 
