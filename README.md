@@ -9,19 +9,14 @@ Doodle jump game written with pygame v0.0.1
 
 
 ## Usage howto
-1. Clone repo :
+1. Clone this repo and change your currect directory:
  ```bash
-git clone git@github.com:mb6ockatf/doodle_jump.git
+git clone git@github.com:mb6ockatf/doodle_jump.git && cd doodle_jump
 ```
 
-2. Change dir:
+2. Start game:
 ```bash
-cd src
-```
-
-3. Start game:
-```bash
-python3 start.py
+python3 src/start.py
 ```
 
 ## Controls table
