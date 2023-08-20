@@ -22,15 +22,14 @@ python3 src/start.py
 insert your nickname in main menu to save the record
 
 ## controls table
-| action      	| description       	|
-|-------------	|-------------------	|
-| `>`         	| move to the right 	|
-| `<`         	| move to the left  	|
-| `space` `↑` 	| pause             	|
-| `escape`    	| pause or exit     	|
+| action             | description          |
+| ------------------ | -------------------- |
+| `>` `d``           | move to the right    |
+| `<` `a`            | move to the left     |
+| `space` `↑` `w`   | pause                |
+| `escape`           | pause or exit        |
 
 ![python](http://ForTheBadge.com/images/badges/made-with-python.svg)
 ![sqlite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=black)
-
 ![license](https://img.shields.io/github/license/mb6ockatf/doodle-jump.svg)
 ![last commit](https://img.shields.io/github/last-commit/mb6ockatf/doodle-jump.svg)
