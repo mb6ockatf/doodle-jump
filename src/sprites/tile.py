@@ -25,8 +25,6 @@ class Tile(pygame.sprite.Sprite):
         self.rect.y = self.generate_height(*player_height)
         x_value = randint(1, screen_sizes[0] - self.width)
         self.rect.x = round_by_five(x_value)
-        x, half_width = self.rect.x, self.width // 2
-        self.edges = (x - half_width, x + half_width)
 
     def generate_height(self, radius: int, edge: int, minimal_y: int) -> int:
         minimal = round(minimal_y - radius + edge * 1.5)
@@ -43,3 +41,30 @@ class Tile(pygame.sprite.Sprite):
             self.rect.y += 50  # type:ignore
         if self.rect.y >= self.screen_sizes[1]:  # type:ignore
             self.kill()
+
+    @property
+    def edges(self) -> tuple:
+        return self.rect.x - self.width // 2, self.rect.x + self.width // 2
+
+
+class MovingTile(Tile):
+    def __init__(self, *stuff):
+        super().__init__(*stuff)
+        self.moving_direction = "right"
+
+    def update(self):
+        self.move()
+        if self.is_broken and self.is_falling:
+            self.rect.y += 50  # type:ignore
+        if self.rect.y >= self.screen_sizes[1]:  # type:ignore
+            self.kill()
+    
+    def move(self):
+        if self.rect.x + 5 > self.screen_sizes[0]:
+            self.moving_direction = "left"
+        elif self.rect.x - 5 < 0:
+            self.moving_direction = "right"
+        if self.moving_direction == "right":
+            self.rect.x += 5
+        else:
+            self.rect.x -= 5
