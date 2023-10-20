@@ -6,7 +6,7 @@ from random import randint, choice
 import pygame
 from argparse import ArgumentParser
 from database import DatabaseConnection
-from sprites import Hopalong, Tile
+from sprites import Hopalong, Tile, MovingTile
 from tools import Button, Colors, InputBox, round_by_five
 
 
@@ -99,7 +99,7 @@ while gamekeeper.is_opened:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 gamekeeper.quit()
-            elif event.key in (pygame.K_UP, pygame.K_SPACE):
+            elif event.key in (pygame.K_UP, pygame.K_SPACE, pygame.K_RETURN):
                 gamekeeper.run()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             btn_pos = gamekeeper.start_btn.rect_pos_data
@@ -168,6 +168,8 @@ while gamekeeper.is_opened:
                 tile_data[0] = True
                 for _ in range(randint(0, 2)):
                     Tile(*tile_data)
+                for _ in range(randint(0, 2)):
+                    MovingTile(*tile_data)
                 gamekeeper.score += 10
         finish_frame()
 pygame.quit()
