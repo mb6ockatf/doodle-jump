@@ -1,0 +1,435 @@
+commit ec95a00f1a844cb420984f3b37397f377dd041ec
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Sat Aug 10 15:59:31 2024 +0300
+
+    chore(CONTRIBUTING): added
+
+commit 1e3e6baa4eebbf91476e0e36bf453e2037ff6324
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Fri Aug 9 21:25:50 2024 +0300
+
+    chore(COPYING): AGPL
+
+commit d0092c66883a0f4800a8e8d1d5dd29e86c692f2c
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Sat Oct 21 00:36:08 2023 +0300
+
+    feat: add moving tiles and minor changes
+    
+    resolve #11
+    resolve #19
+
+commit 00c627235bcc4a28927ff08939ed1c6eee9074a2
+Author: Iwan <vingving648@gmail.com>
+Date:   Sat Oct 14 16:14:29 2023 +0300
+
+    fix error, change to title letters, fix `Python` badge (#35)
+
+commit a5ed63811e40170495389719bbdb5bae2bc432d7
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Mon Aug 21 00:42:49 2023 +0300
+
+    fix(difficulty system)
+    
+    see previous commit, main.py file
+    wasd description added to README.md
+
+commit c530f10bb5528674bf8ee53dd9041c3b1a75345d
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Mon Aug 21 00:36:59 2023 +0300
+
+    feat(control): add wasd keys
+    
+    - refactored with black formatter
+    - remove too much indentation from main.py
+
+commit cb994161fcb103738598c0bcf46f99f80a81e959
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Thu Jul 6 11:46:54 2023 +0000
+
+    refactor: indent with tabs from now on
+    
+    (the right way)
+
+commit 5fa77297f48d217be17e6004c1517f1128bd5242
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Thu Jul 6 11:33:25 2023 +0000
+
+    chores
+    
+    - lowercase README.md
+    - remove start.py as stated in 970ea6e
+    - add line about nickname in README.md - was removed by @IvanIsak2000 for some reason
+
+commit c58dbaa8749b545ff966d325145c4275ec8a11ea
+Author: Iwan <vingving648@gmail.com>
+Date:   Thu Jul 6 14:24:19 2023 +0300
+
+    `README.md` update (#34)
+    
+    Signed-off-by: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+    Signed-off-by: Iwan <vingving648@gmail.com>
+    Co-authored-by: mb6ockatf <mdddmmmm@yandex.ru>
+
+commit 98952194c1e891ae24b0a65b35d72273e789af0c
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sat May 13 11:44:34 2023 +0300
+
+    chore(LICENSE): move to AGPL v3
+
+commit 9d9f8141aaac9de3dc1b69fcc93541e393c1ee07
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Mon May 1 10:18:27 2023 +0300
+
+    build(deps): bump pygame from 2.3.0 to 2.4.0 (#33)
+    
+    Bumps [pygame](https://github.com/pygame/pygame) from 2.3.0 to 2.4.0.
+    - [Release notes](https://github.com/pygame/pygame/releases)
+    - [Commits](https://github.com/pygame/pygame/compare/2.3.0...2.4.0)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: pygame
+      dependency-type: direct:production
+      update-type: version-update:semver-minor
+    ...
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+    Co-authored-by: mb6ockatf <mdddmmmm@yandex.ru>
+
+commit 2ed9551cbe3800152150b216c2a987857d707b2d
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Mon May 1 10:14:27 2023 +0300
+
+    chores: remove pygame version specification
+    
+    pygame devs seems to be cool enough not to break backward compatibilities
+    
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+
+commit 3148747b41775db5bb8ad0c879668b5dfb49708b
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Sun Apr 30 00:18:56 2023 +0300
+
+    refactor (#32)
+    
+    * refactor
+    
+    * fix: score out of display
+    
+    resolves #18
+    
+    ---------
+    
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+
+commit 57ee3e2339e22650f0b486d670883293b66df2b1
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Sat Apr 29 23:45:00 2023 +0300
+
+    add more shields, now looks nice (#31)
+    
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+
+commit 620002a948ea4a22a379b2988026610bcd849506
+Author: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+Date:   Sun Mar 26 21:52:17 2023 +0300
+
+    Patch 1 (#29)
+    
+    * added pictures
+    
+    Signed-off-by: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+    
+    * add `Possible errors`
+    
+    Signed-off-by: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+    
+    * add start file
+    
+    Signed-off-by: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+    
+    * Added `start.py ` team hence `src/main.py ` not relevant
+    
+    Signed-off-by: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+    
+    ---------
+    
+    Signed-off-by: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+
+commit 82c5b16303ffc710e1de6f21ea22dc833885aabd
+Author: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+Date:   Sun Mar 26 21:46:39 2023 +0300
+
+    `start.py ` instead of `src/main.py ` (#30)
+    
+    * add start file
+    
+    Signed-off-by: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+    
+    * Rename start..py to start.py
+    
+    Signed-off-by: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+    
+    ---------
+    
+    Signed-off-by: VANECK <79650307+IvanIsak2000@users.noreply.github.com>
+
+commit c022b7ef4c60dd9fd37d738468851861d0b53ff1
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Wed Mar 15 06:04:13 2023 +0000
+
+    build(deps): bump pygame from 2.2.0 to 2.3.0
+    
+    Bumps [pygame](https://github.com/pygame/pygame) from 2.2.0 to 2.3.0.
+    - [Release notes](https://github.com/pygame/pygame/releases)
+    - [Commits](https://github.com/pygame/pygame/compare/2.2.0...2.3.0)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: pygame
+      dependency-type: direct:production
+      update-type: version-update:semver-minor
+    ...
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+commit 93f276b5d3fc071adb096d758c8d087cd99441bc
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Tue Feb 28 06:06:23 2023 +0000
+
+    build(deps): bump pygame from 2.1.2 to 2.2.0
+    
+    Bumps [pygame](https://github.com/pygame/pygame) from 2.1.2 to 2.2.0.
+    - [Release notes](https://github.com/pygame/pygame/releases)
+    - [Commits](https://github.com/pygame/pygame/compare/2.1.2...2.2.0)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: pygame
+      dependency-type: direct:production
+      update-type: version-update:semver-minor
+    ...
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+commit cb6b52e8ecd256a12aaa20d2c2958316d722c2dd
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Wed Feb 8 16:48:53 2023 +0300
+
+    22 integrate with sourceforge (resolves #22) (#23)
+    
+    * add sourceforge buttons
+    
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+    
+    * гpdate CHANGELOG.md
+    
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+    
+    * update: README.md design
+    
+    add: sourceforge download button & counters
+    
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+    
+    ---------
+    
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+
+commit 8cec21fe9a86919cba3c20afe733a046613546e0
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Mon Jan 30 18:55:42 2023 +0300
+
+    add sprite (#21)
+    
+    * add: ghost (#2) & art_data refactor
+
+commit 356d5dc2ed2a0f99f78ca55e72df268a2a1b355d
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Sat Jan 28 16:06:49 2023 +0300
+
+    rename repository: doodle-juump (#20)
+
+commit 4e32e92ba2b2267ef190c5751bfb3737f8ed32ac
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Wed Jan 25 15:00:26 2023 +0300
+
+    add: score depends on difficulty
+
+commit b6cb2297907b98bbe0788f4eec1f17aedc658737
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Wed Jan 25 14:38:51 2023 +0300
+
+    fix: speed logic
+    
+    Now, horizontal movement speed will increase by 1.25 for every 100 points
+
+commit 3e7bde1ef2205b437dda3454ca067278d4825e64
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Wed Jan 25 12:35:28 2023 +0300
+
+    update changelog
+    
+    Signed-off-by: mb6ockatf <mdddmmmm@yandex.ru>
+
+commit 8240f84bed2a90cb3180edbc0d0b13b323cd617a
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Tue Jan 24 16:44:40 2023 +0300
+
+    fix: wrong tile generation (#13)
+
+commit ebeef7413973c6585fd74b141faa1facda545864
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 22 17:16:47 2023 +0300
+
+    add: presentation
+
+commit 5735efaf4c21ab49d1d5604cefedd3292068874f
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 22 13:26:36 2023 +0300
+
+    add: changelog notes (#7)
+
+commit b6ecaa7bba09e2f03f37a8d7b2767a91e650bb0d
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 22 13:16:42 2023 +0300
+
+    update: README.md (#4)
+
+commit 27926eb7609c0c94921a9d4de27f97d1430f6921
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 22 13:06:10 2023 +0300
+
+    Update dependabot.yml
+
+commit 6eeb7c2f43718cb16055d88d22efac3ea4a75b78
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 22 12:58:55 2023 +0300
+
+    add: dependabot (#6)
+
+commit a5c0caa7f5fa80a34a9b94da847149304ce0499c
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 22 12:57:39 2023 +0300
+
+    fix: requirements.txt (#5)
+
+commit 746ad01bc91791e5b037c57a5a039d9d22700346
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 22 12:28:41 2023 +0300
+
+    add: database (#3) and main menu (#1)
+
+commit a8ee9585fa0c9a7ee2a8c68a09e7d01ed5e8ccc9
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Fri Jan 20 19:23:04 2023 +0300
+
+    refactor: allocate code to different files
+
+commit 680338ae3e44ec8833853896be1fe160ebef556f
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Tue Jan 10 00:17:08 2023 +0300
+
+    fix typo
+
+commit ee9a5809e21dba85fe51244a1d723cd8285c027e
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Tue Jan 10 00:03:11 2023 +0300
+
+    clean-up & fix restart bug
+
+commit 0a6ebfe18b50e8b33116b97905d113151e128dd1
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 8 01:11:20 2023 +0300
+
+    rename pics into art_data
+
+commit 6b47d4bf176486815c3ae740a60f5a3fa965feb1
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 8 01:09:10 2023 +0300
+
+    sortta work now
+
+commit 5fc8118600f197d229007e5e16e62a6863e53c3a
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sun Jan 8 01:08:29 2023 +0300
+
+    correct sprite; ignore files
+
+commit c57ea40abb7c16cd4c1e5cea353af05f7ed1574b
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Sat Jan 7 14:13:45 2023 +0300
+
+    update
+
+commit 7773d9990bed101a53093d214a40421c57df8461
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Fri Jan 6 19:10:18 2023 +0300
+
+    Delete settings.json
+
+commit 946bc93af29f487ed12dec3c0b4c2ae3b3e02444
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Fri Jan 6 17:43:35 2023 +0300
+
+    add: tiles spawn
+
+commit 1acf53f821e57f279f8adb1662d6eb895f7bf300
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Thu Jan 5 16:23:33 2023 +0300
+
+    remove pymunk
+
+commit d6b7c9aeab633363ca3f77bc34c844abfb2b9a3c
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Thu Jan 5 16:22:21 2023 +0300
+
+    now it can jump and fall
+
+commit 758173f62b7c3116e2e09ff052615335f696fd46
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Thu Jan 5 16:21:06 2023 +0300
+
+    improve: sprites
+
+commit e3afed4a802b81dd99683779c5297ebbd8bb2d61
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Wed Jan 4 00:18:04 2023 +0300
+
+    add: main character
+
+commit fe5b29d8c86e54aad5eb50f7eab53fdd11e9c7c9
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Wed Jan 4 00:17:35 2023 +0300
+
+    improve: freaky picture
+
+commit fa5459fc461dc340d1e98cb51c7d5c829efa914e
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Mon Jan 2 22:51:55 2023 +0300
+
+    not working
+
+commit b0609820d4a21b7db7d39564ebbb786fdbe3ae4d
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Mon Jan 2 20:52:17 2023 +0300
+
+    ddoouubbllee  pprriinntt
+    
+    II  hhaavvee  ddoouubbllee  pprriinntt  oonn  tthhiiss  PPCC  ffoorr  nnoo  rreeaassoonn,,  ssoo  II''ll  jjuusstt  mmoovvee  ffiilleess  vviiaa  ggiitt
+
+commit dff0ff9e006f4939ba5ead59236fb54741e96915
+Author: mb6ockatf <mb6ockatf@relay.firefox.com>
+Date:   Mon Jan 2 17:33:32 2023 +0300
+
+    add: in progress
+
+commit 690ab99e51bab9d3454f4a5acd962850ee8d385e
+Author: mb6ockatf <mdddmmmm@yandex.ru>
+Date:   Sun Jan 1 15:20:19 2023 +0300
+
+    Initial commit
