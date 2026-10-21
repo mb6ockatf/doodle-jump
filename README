@@ -1,0 +1,50 @@
+doodle-jump -- a Doodle Jump game
+=================================
+
+A Doodle Jump game written in Python with pygame.  Records are kept in
+an SQLite database: enter your nickname in the main menu to save yours.
+
+Screenshots:
+https://user-images.githubusercontent.com/79650307/227780633-9eb0e835-50d6-4a2e-a601-bb3f7e3bb598.png
+https://user-images.githubusercontent.com/79650307/227780675-4730020d-a2e6-437f-a5b7-bbc7224aaaf5.png
+
+Requirements
+------------
+
+Python 3 and pygame (see requirements.txt).
+
+Using it
+--------
+
+Clone this repository and change to its directory:
+
+    git clone https://github.com/mb6ockatf/doodle-jump.git
+    cd doodle-jump
+
+Start the game:
+
+    python3 src/main.py
+
+Insert your nickname in the main menu to save the record.
+
+Controls:
+
+    Right arrow, d         move to the right
+    Left arrow, a          move to the left
+    Space, Up arrow, w     pause
+    Escape                 pause or exit
+
+Reporting bugs
+--------------
+
+Report bugs at https://github.com/mb6ockatf/doodle-jump/issues.  The
+project is open for contribution: feel free to fork it, make pull
+requests or email me (see CONTRIBUTING).
+
+Copying
+-------
+
+Copyright (C) 2023 mb6ockatf
+
+doodle-jump is released under the GNU General Public License, version
+3; see COPYING.
