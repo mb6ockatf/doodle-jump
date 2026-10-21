@@ -1,0 +1,6 @@
+[lint]
+select = ["E", "F"]
+
+[lint.per-file-ignores]
+"src/*/__init__.py" = ["F403"]
+"src/main.py" = ["F401"]
